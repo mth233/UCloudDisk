@@ -1,0 +1,17 @@
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
+.ant-carousel .slick-slide {
+    text-align: center;
+    height: 603.5px;
+    line-height: 601px;
+    background: #364d79;
+    overflow: hidden;
+}
+
+.ant-carousel .slick-slide h3 {
+    color: #fff;
+}
+.pageWrapper{
+    width: 1064px;
+    height: 601px;
+}

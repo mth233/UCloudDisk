@@ -1,160 +1,58 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { CSSTransition } from 'react-transition-group';
-import { actionCreators } from './store';
-import { actionCreators as loginActionCreators } from '../../pages/login/store'
-import {
-	HeaderWrapper,
-	Logo,
-	Nav,
-	NavItem,
-	SearchWrapper,
-	NavSearch,
-	SearchInfo,
-	SearchInfoTitle,
-	SearchInfoSwitch,
-	SearchInfoList,
-	SearchInfoItem,
-	Addition,
-	Button
-} from './style';
+import React, {Component} from 'react';
+
+import {Menu, Icon} from 'antd';
+import {Logo} from "./style";
 
 class MyHeader extends Component {
 
-	getListArea() {
-		const { focused, list, page, totalPage, mouseIn, handleMouseEnter, handleMouseLeave, handleChangePage } = this.props;
-		const newList = list.toJS();
-		const pageList = [];
+	state = {
+		current: 'mail',
+	};
 
-		if (newList.length) {
-			for (let i = (page - 1) * 10; i < page * 10; i++) {
-				pageList.push(
-					<SearchInfoItem key={newList[i]}>{newList[i]}</SearchInfoItem>
-				)
-			}
-		}
-
-		if (focused || mouseIn) {
-			return (
-				<SearchInfo
-					onMouseEnter={handleMouseEnter}
-					onMouseLeave={handleMouseLeave}
-				>
-					<SearchInfoTitle>
-						热门搜索
-						<SearchInfoSwitch
-							onClick={() => handleChangePage(page, totalPage, this.spinIcon)}
-						>
-							<i ref={(icon) => {this.spinIcon = icon}} className="iconfont spin">&#xe851;</i>
-							换一批
-						</SearchInfoSwitch>
-					</SearchInfoTitle>
-					<SearchInfoList>
-						{pageList}
-					</SearchInfoList>
-				</SearchInfo>
-			)
-		}else {
-			return null;
-		}
-	}
+	handleClick = (e) => {
+		console.log('click ', e);
+		this.setState({
+			current: e.key,
+		});
+	};
 
 	render() {
-		const { focused, handleInputFocus, handleInputBlur, list, login, logout } = this.props;
+
+
+		const SubMenu = Menu.SubMenu;
+		const MenuItemGroup = Menu.ItemGroup;
+
 		return (
-			<HeaderWrapper>
-				<Link to='/'>
-					<Logo/>
-				</Link>
-				<Nav>
-					<NavItem className='left active'>首页</NavItem>
-					<NavItem className='left'>下载App</NavItem>
-					{
-						login ?
-							<NavItem onClick={logout} className='right'>退出</NavItem> :
-							<Link to='/login'><NavItem className='right'>登陆</NavItem></Link>
-					}
-					<NavItem className='right'>
-						<i className="iconfont">&#xe636;</i>
-					</NavItem>
-					<SearchWrapper>
-						<CSSTransition
-							in={focused}
-							timeout={200}
-							classNames="slide"
-						>
-							<NavSearch
-								className={focused ? 'focused': ''}
-								onFocus={() => handleInputFocus(list)}
-								onBlur={handleInputBlur}
-							></NavSearch>
-						</CSSTransition>
-						<i className={focused ? 'focused iconfont zoom': 'iconfont zoom'}>
-							&#xe614;
-						</i>
-						{this.getListArea()}
-					</SearchWrapper>
-				</Nav>
-				<Addition>
-					<Link to='/write'>
-						<Button className='writting'>
-							<i className="iconfont">&#xe615;</i>
-							写文章
-						</Button>
-					</Link>
-					<Button className='reg'>注册</Button>
-				</Addition>
-			</HeaderWrapper>
+			<Menu
+				onClick={this.handleClick}
+				selectedKeys={[this.state.current]}
+				mode="horizontal"
+			>
+				<Logo>Logo</Logo>
+				<Menu.Item key="mail">
+					<Icon type="home"/>Home
+				</Menu.Item>
+				<Menu.Item key="app" disabled>
+					<Icon type="appstore"/>App
+				</Menu.Item>
+				<SubMenu
+					title={<span className="submenu-title-wrapper"><Icon type="setting"/>Navigation Three - Submenu</span>}>
+					<MenuItemGroup title="Item 1">
+						<Menu.Item key="setting:1">Option 1</Menu.Item>
+						<Menu.Item key="setting:2">Option 2</Menu.Item>
+					</MenuItemGroup>
+					<MenuItemGroup title="Item 2">
+						<Menu.Item key="setting:3">Option 3</Menu.Item>
+						<Menu.Item key="setting:4">Option 4</Menu.Item>
+					</MenuItemGroup>
+				</SubMenu>
+				<Menu.Item key="contact">
+					<Icon type="phone" />Contact
+				</Menu.Item>
+			</Menu>
 		);
 	}
 }
 
-const mapStateToProps = (state) => {
-	return {
-		focused: state.getIn(['header', 'focused']),
-		list: state.getIn(['header', 'list']),
-		page: state.getIn(['header', 'page']),
-		totalPage: state.getIn(['header', 'totalPage']),
-		mouseIn: state.getIn(['header', 'mouseIn']),
-		login: state.getIn(['login', 'login'])
-	}
-}
 
-const mapDispathToProps = (dispatch) => {
-	return {
-		handleInputFocus(list) {
-			(list.size === 0) && dispatch(actionCreators.getList());
-			dispatch(actionCreators.searchFocus());
-		},
-		handleInputBlur() {
-			dispatch(actionCreators.searchBlur());
-		},
-		handleMouseEnter() {
-			dispatch(actionCreators.mouseEnter());
-		},
-		handleMouseLeave() {
-			dispatch(actionCreators.mouseLeave());
-		},
-		handleChangePage(page, totalPage, spin) {
-			let originAngle = spin.style.transform.replace(/[^0-9]/ig, '');
-			if (originAngle) {
-				originAngle = parseInt(originAngle, 10);
-			}else {
-				originAngle = 0;
-			}
-			spin.style.transform = 'rotate(' + (originAngle + 360) + 'deg)';
-
-			if (page < totalPage) {
-				dispatch(actionCreators.changePage(page + 1));
-			}else {
-				dispatch(actionCreators.changePage(1));
-			}
-		},
-		logout() {
-			dispatch(loginActionCreators.logout())
-		}
-	}
-}
-
-export default connect(mapStateToProps, mapDispathToProps)(MyHeader);
+export default MyHeader;
