@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { LoginWrapper, LoginBox, Input, Button } from './style';
 import { actionCreators } from './store';
 
-class Login extends PureComponent {
+class Form extends PureComponent {
 	render() {
 		const { loginStatus } = this.props;
 		if (!loginStatus) {
@@ -25,12 +25,12 @@ class Login extends PureComponent {
 
 const mapState = (state) => ({
 	loginStatus: state.getIn(['login', 'login'])
-})
+});
 
 const mapDispatch = (dispatch) => ({
 	login(accountElem, passwordElem){
 		dispatch(actionCreators.login(accountElem.value, passwordElem.value))
 	}
-})
+});
 
-export default connect(mapState, mapDispatch)(Login);
+export default connect(mapState, mapDispatch)(Form);

@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import "./style.css";
+import "./form";
 import Slider from "react-slick";
+import Form from "antd/es/form/Form";
 
 class Home extends Component {
 	render() {
@@ -25,8 +27,8 @@ class Home extends Component {
 				<div>
 					<img src="../../statics/bg4.jpg" alt=""/>
 				</div>
-
 			</Slider>
+
 		);
 	}
 }
