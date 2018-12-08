@@ -1,36 +1,60 @@
-import React, { PureComponent } from 'react';
-import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { LoginWrapper, LoginBox, Input, Button } from './style';
-import { actionCreators } from './store';
+import {
+	Form, Icon, Input, Button, Checkbox,
+} from 'antd';
+import React from 'react';
+import './style.css';
 
-class Form extends PureComponent {
+const FormItem = Form.Item;
+
+class NormalLoginForm extends React.Component {
+	handleSubmit = (e) => {
+		e.preventDefault();
+		this.props.form.validateFields((err, values) => {
+			if (!err) {
+				console.log('Received values of form: ', values);
+			}
+		});
+	};
+
 	render() {
-		const { loginStatus } = this.props;
-		if (!loginStatus) {
-			return (
-				<LoginWrapper>
-					<LoginBox>
-						<Input placeholder='账号' innerRef={(input) => {this.account = input}}/>
-						<Input placeholder='密码' type='password' innerRef={(input) => {this.password = input}}/>
-						<Button onClick={() => this.props.login(this.account, this.password)}>登陆</Button>
-					</LoginBox>
-				</LoginWrapper>
-			)
-		}else {
-			return <Redirect to='/'/>
-		}
+		const {getFieldDecorator} = this.props.form;
+		return (
+			<Form onSubmit={this.handleSubmit} className="login-form">
+				U云盘登陆
+				<br/><br/>
+				<FormItem>
+					{getFieldDecorator('userName', {
+						rules: [{required: true, message: 'Please input your username!'}],
+					})(
+						<Input prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>} placeholder="Username"/>
+					)}
+				</FormItem>
+				<FormItem>
+					{getFieldDecorator('password', {
+						rules: [{required: true, message: 'Please input your Password!'}],
+					})(
+						<Input prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>} type="password"
+									 placeholder="Password"/>
+					)}
+				</FormItem>
+				<FormItem>
+					{getFieldDecorator('remember', {
+						valuePropName: 'checked',
+						initialValue: true,
+					})(
+						<Checkbox>Remember me</Checkbox>
+					)}
+					<a className="login-form-forgot" href="" style={{float:'right'}} >Forgot password</a>
+					<br/>
+					<Button type="primary" htmlType="submit" className="login-form-button" style={{width:'100%'}}>
+						Log in
+					</Button>
+					Or <a href="">register now!</a>
+				</FormItem>
+			</Form>
+		);
 	}
 }
 
-const mapState = (state) => ({
-	loginStatus: state.getIn(['login', 'login'])
-});
-
-const mapDispatch = (dispatch) => ({
-	login(accountElem, passwordElem){
-		dispatch(actionCreators.login(accountElem.value, passwordElem.value))
-	}
-});
-
-export default connect(mapState, mapDispatch)(Form);
+const LoginForm = Form.create()(NormalLoginForm);
+export default LoginForm;

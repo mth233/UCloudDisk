@@ -5,10 +5,11 @@ const LoadableComponent = Loadable({
   loader: () => import('./'),
   loading() {
   	return (
-      <Spin size="large" />
       <div>
+				<Spin size="large" />
         正在加载
-      </div>)
+      </div>
+		)
   }
 });
 
