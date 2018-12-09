@@ -1,33 +1,36 @@
 import React, {
-    Component
+	Component
 } from 'react';
 import 'antd/dist/antd.css';
+
 import {
-    Provider
+	Provider
 } from 'react-redux';
 import {
-    BrowserRouter,
-    Route
+	BrowserRouter,
+	Route
 } from 'react-router-dom';
 import MyHeader from './common/header';
-import Carousel from './pages/home';
+import Home from './pages/home';
+import RegistrationForm from './pages/register';
 import Detail from './pages/detail/loadable.js';
 import store from './store';
 
 class App extends Component {
-    render() {
-        return (
-            <Provider store={store}>
+	render() {
+		return (
+			<Provider store={store}>
 				<BrowserRouter>
 					<div>
 						<MyHeader/>
-						<Route path='/' exact component={Carousel}/>
+						<Route path='/' exact component={Home}/>
+						<Route path='/register' exact component={RegistrationForm}/>
 						<Route path='/detail/:id' exact component={Detail}/>
 					</div>
 				</BrowserRouter>
 			</Provider>
-        );
-    }
+		);
+	}
 }
 
 export default App;

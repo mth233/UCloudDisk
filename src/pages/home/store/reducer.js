@@ -1,4 +1,4 @@
-import { fromJS } from 'immutable';
+import {fromJS} from 'immutable';
 import * as constants from './constants';
 
 const defaultState = fromJS({
@@ -6,6 +6,7 @@ const defaultState = fromJS({
 	articleList: [],
 	recommendList: [],
 	articlePage: 1,
+	loginJudge: false,
 	showScroll: false
 });
 
@@ -25,7 +26,7 @@ const addArticleList = (state, action) => {
 };
 
 export default (state = defaultState, action) => {
-	switch(action.type) {
+	switch (action.type) {
 		case constants.CHANGE_HOME_DATA:
 			return changeHomeData(state, action);
 		case constants.ADD_ARTICLE_LIST:
