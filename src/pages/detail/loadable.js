@@ -7,7 +7,6 @@ const LoadableComponent = Loadable({
   	return (
       <div>
 				<Spin size="large" />
-        正在加载
       </div>
 		)
   }

@@ -1,117 +1,79 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import { actionCreators } from "./store";
-import { Layout, Menu, Breadcrumb, Icon } from "antd";
+/*
+ * @Author: 刘鑫
+ * @Date: 2018-12-08 15:51:17
+ */
+import React, {Component} from "react";
+import {connect} from "react-redux";
+import {withRouter} from "react-router-dom";
+import {actionCreators} from "./store";
+import {Layout, Menu, Breadcrumb, Icon} from "antd";
 import "./style.css";
 
 class Detail extends Component {
-  render() {
-    const { SubMenu } = Menu;
-    const { Header, Content, Footer, Sider } = Layout;
+	render() {
+		const {SubMenu} = Menu;
+		const {Header, Content, Footer, Sider} = Layout;
 
-    return (
-      <Layout>
-        <Header className="header">
-          <div className="logo" />
-          <Menu
-            theme="dark"
-            mode="horizontal"
-            defaultSelectedKeys={["2"]}
-            style={{ lineHeight: "64px" }}
-          >
-            <Menu.Item key="1">nav 1</Menu.Item>
-            <Menu.Item key="2">nav 2</Menu.Item>
-            <Menu.Item key="3">nav 3</Menu.Item>
-          </Menu>
-        </Header>
-        <Content style={{ padding: "0 50px" }}>
-          <Breadcrumb style={{ margin: "16px 0" }}>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
-          </Breadcrumb>
-          <Layout style={{ padding: "24px 0", background: "#fff" }}>
-            <Sider width={200} style={{ background: "#fff" }}>
-              <Menu
-                mode="inline"
-                defaultSelectedKeys={["1"]}
-                defaultOpenKeys={["sub1"]}
-                style={{ height: "100%" }}
-              >
-                <SubMenu
-                  key="sub1"
-                  title={
-                    <span>
-                      <Icon type="user" />
-                      subnav 1
-                    </span>
-                  }
-                >
-                  <Menu.Item key="1">option1</Menu.Item>
-                  <Menu.Item key="2">option2</Menu.Item>
-                  <Menu.Item key="3">option3</Menu.Item>
-                  <Menu.Item key="4">option4</Menu.Item>
-                </SubMenu>
-                <SubMenu
-                  key="sub2"
-                  title={
-                    <span>
-                      <Icon type="laptop" />
-                      subnav 2
-                    </span>
-                  }
-                >
-                  <Menu.Item key="5">option5</Menu.Item>
-                  <Menu.Item key="6">option6</Menu.Item>
-                  <Menu.Item key="7">option7</Menu.Item>
-                  <Menu.Item key="8">option8</Menu.Item>
-                </SubMenu>
-                <SubMenu
-                  key="sub3"
-                  title={
-                    <span>
-                      <Icon type="notification" />
-                      subnav 3
-                    </span>
-                  }
-                >
-                  <Menu.Item key="9">option9</Menu.Item>
-                  <Menu.Item key="10">option10</Menu.Item>
-                  <Menu.Item key="11">option11</Menu.Item>
-                  <Menu.Item key="12">option12</Menu.Item>
-                </SubMenu>
-              </Menu>
-            </Sider>
-            <Content style={{ padding: "0 24px", minHeight: 280 }}>
-              Content
-            </Content>
-          </Layout>
-        </Content>
-        <Footer style={{ textAlign: "center" }}>
-          Ant Design ©2018 Created by Ant UED
-        </Footer>
-      </Layout>
-    );
-  }
+		return (
+			<Content style={{padding: '0 50px'}}>
+				<Breadcrumb style={{margin: '16px 0'}}>
+					<Breadcrumb.Item>Home</Breadcrumb.Item>
+					<Breadcrumb.Item>List</Breadcrumb.Item>
+					<Breadcrumb.Item>App</Breadcrumb.Item>
+				</Breadcrumb>
+				<Layout style={{padding: '24px 0', background: '#fff'}}>
+					<Sider width={200} style={{background: '#fff'}}>
+						<Menu
+							mode="inline"
+							defaultSelectedKeys={['1']}
+							defaultOpenKeys={['sub1']}
+							style={{height: '100%'}}
+						>
+							<SubMenu key="sub1" title={<span><Icon type="user"/>subnav 1</span>}>
+								<Menu.Item key="1">option1</Menu.Item>
+								<Menu.Item key="2">option2</Menu.Item>
+								<Menu.Item key="3">option3</Menu.Item>
+								<Menu.Item key="4">option4</Menu.Item>
+							</SubMenu>
+							<SubMenu key="sub2" title={<span><Icon type="laptop"/>subnav 2</span>}>
+								<Menu.Item key="5">option5</Menu.Item>
+								<Menu.Item key="6">option6</Menu.Item>
+								<Menu.Item key="7">option7</Menu.Item>
+								<Menu.Item key="8">option8</Menu.Item>
+							</SubMenu>
+							<SubMenu key="sub3" title={<span><Icon type="notification"/>subnav 3</span>}>
+								<Menu.Item key="9">option9</Menu.Item>
+								<Menu.Item key="10">option10</Menu.Item>
+								<Menu.Item key="11">option11</Menu.Item>
+								<Menu.Item key="12">option12</Menu.Item>
+							</SubMenu>
+						</Menu>
+					</Sider>
+					<Content style={{padding: '0 24px', minHeight: 280}}>
+						Content
+					</Content>
+				</Layout>
+			</Content>
+		);
+	}
 
-  componentDidMount() {
-    this.props.getDetail(this.props.match.params.id);
-  }
+	componentDidMount() {
+		this.props.getDetail(this.props.match.params.id);
+	}
 }
 
 const mapState = state => ({
-  title: state.getIn(["detail", "title"]),
-  content: state.getIn(["detail", "content"])
+	title: state.getIn(["detail", "title"]),
+	content: state.getIn(["detail", "content"])
 });
 
 const mapDispatch = dispatch => ({
-  getDetail(id) {
-    dispatch(actionCreators.getDetail(id));
-  }
+	getDetail(id) {
+		dispatch(actionCreators.getDetail(id));
+	}
 });
 
 export default connect(
-  mapState,
-  mapDispatch
+	mapState,
+	mapDispatch
 )(withRouter(Detail));

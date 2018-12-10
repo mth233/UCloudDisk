@@ -1,6 +1,7 @@
 import {
 	Form, Icon, Input, Button, Checkbox,
 } from 'antd';
+import actionCreators from './store/actionCreators';
 import React from 'react';
 import './style.css';
 
@@ -56,5 +57,17 @@ class NormalLoginForm extends React.Component {
 	}
 }
 
+const mapState = (state) => ({
+	loginStatus: state.getIn(['login', 'login'])
+})
+
+const mapDispatch = (dispatch) => ({
+	login(accountElem, passwordElem){
+		dispatch(actionCreators.login(accountElem.value, passwordElem.value))
+	},
+	logout(){
+		dispatch(actionCreators)
+	}
+})
 const LoginForm = Form.create()(NormalLoginForm);
-export default LoginForm;
+export default connect(mapState, mapDispatch)(LoginForm);
