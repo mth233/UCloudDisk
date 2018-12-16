@@ -1,4 +1,3 @@
-export const CHANGE_HOME_DATA = 'home/CHANGE_HOME_DATA';
-export const ADD_ARTICLE_LIST = 'home/ADD_ARTICLE_LIST';
-export const TOGGLE_SCROLL_TOP = 'home/TOGGLE_SCROLL_TOP';
-export const JUDGE_USER_LOGIN = 'home/JUDGE_URSER_LOGIN';
+export const JUDGE_USER_LOGIN = "home/JUDGE_URSER_LOGIN";
+export const CHANGE_USER_LOGIN = "home/CHANGE_USER_LOGIN";
+export const CHANGE_USER_LOGOUT = "home/CHANGE_USER_LOGOUT";

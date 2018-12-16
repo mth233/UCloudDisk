@@ -17,8 +17,8 @@ class MyHeader extends Component {
 	};
 
 	render() {
-		const SubMenu = Menu.SubMenu;
-		const MenuItemGroup = Menu.ItemGroup;
+		// const SubMenu = Menu.SubMenu;
+		// const MenuItemGroup = Menu.ItemGroup;
 
 		return (
 			<Menu

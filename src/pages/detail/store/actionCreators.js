@@ -3,15 +3,22 @@ import * as constants from './constants';
 
 const changeDetail = (title, content) => ({
 	type: constants.CHANGE_DETAIL,
-	title,
 	content
 });
+const getFile = (content) =>({
+	type:constants.GET_FILES,
+	content
+})
 
 export const getDetail = (id) => {
 	return (dispatch) => {
-		axios.get('/api/detail.json?id=' + id).then((res) => {
-			const result = res.data.data;
-			dispatch(changeDetail(result.title, result.content));
+		axios.get('/interfaces/file/get_file_list').then((res) => {
+			const status = res.status;
+			if (!status){
+				const content = res.result;
+				dispatch(getFile(content));
+			}
+
 		}).catch(() => {
 			
 		})

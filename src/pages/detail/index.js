@@ -10,6 +10,11 @@ import {Layout, Menu, Breadcrumb, Icon} from "antd";
 import "./style.css";
 
 class Detail extends Component {
+	componentDidMount() {
+
+	}
+
+
 	render() {
 		const {SubMenu} = Menu;
 		const {Header, Content, Footer, Sider} = Layout;
@@ -62,12 +67,12 @@ class Detail extends Component {
 	}
 }
 
-const mapState = state => ({
-	title: state.getIn(["detail", "title"]),
-	content: state.getIn(["detail", "content"])
+const mapState = (state) => ({
+	title: state.getIn(['detail', 'title']),
+	content: state.getIn(['detail', 'content'])
 });
 
-const mapDispatch = dispatch => ({
+const mapDispatch = (dispatch) => ({
 	getDetail(id) {
 		dispatch(actionCreators.getDetail(id));
 	}

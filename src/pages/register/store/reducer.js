@@ -1,23 +1,17 @@
-import { fromJS } from 'immutable';
+import {fromJS} from 'immutable';
 import * as constants from './constants';
 
 const defaultState = fromJS({
-	username: '',
-	password: '',
-	confirmDirty: false,
-	autoCompleteResult: [],
+	error_code: 0,
 });
 
 
-
 export default (state = defaultState, action) => {
-	switch(action.type) {
-		// case constants.CHANGE_HOME_DATA:
-		// 	return changeHomeData(state, action);
-		// case constants.ADD_ARTICLE_LIST:
-		// 	return addArticleList(state, action);
-		// case constants.TOGGLE_SCROLL_TOP:
-		// 	return state.set('showScroll', action.show);
+	switch (action.type) {
+		case constants.REPEATED_USERNAME:
+			return state.set('error_code', 1002);
+		case constants.ILLEGAL_USERNAME:
+			return state.set('error_code', 1001);
 		default:
 			return state;
 	}

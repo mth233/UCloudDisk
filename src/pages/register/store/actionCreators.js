@@ -1,18 +1,26 @@
 import axios from 'axios';
 import * as constants from './constants';
-import {fromJS} from 'immutable';
 
-
-export const userSignupRequest = (userData) => {
+export const errMessage = () => ({
+	type: constants.ILLEGAL_USERNAME
+});
+export const repUsername = ()=>({
+	type:constants.REPEATED_USERNAME
+});
+export const userSignupRequest = (username,password) => {
 	let formData = new FormData();
-	formData.append('username', userData.username);
-	formData.append('password', userData.password);
+	formData.append('username', username);
+	formData.append('password', password);
 	return (dispatch) => {
-		return axios.post('/api/users', formData).then((res) => {
+		return axios.post('/api/users/reg', formData).then((res) => {
 			const status = res.status;
 			if (status) {
-				const error_code = res.error_code;
-				const msg = res.msg;
+				const err_code = res.error_code;
+				if (err_code === 1001) {
+					dispatch(errMessage())
+				}else{
+					dispatch(repUsername());
+				}
 			}
 		});
 	}

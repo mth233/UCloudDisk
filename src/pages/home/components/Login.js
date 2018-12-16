@@ -1,6 +1,7 @@
 import {
 	Form, Icon, Input, Button, Checkbox,
 } from 'antd';
+import {connect} from 'react-redux';
 import * as React from "react";
 
 const FormItem = Form.Item;
@@ -53,4 +54,9 @@ class NormalLoginForm extends React.Component {
 }
 
 const WrappedNormalLoginForm = Form.create()(NormalLoginForm);
-export default WrappedNormalLoginForm;
+const mapDispatch = (dispatch) =>{
+	handleSubmit=(e){
+		dispatch(action)
+	}
+}
+export default connect(null,null)(WrappedNormalLoginForm);

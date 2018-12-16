@@ -1,39 +1,44 @@
 import axios from 'axios';
 import * as constants from './constants';
-import { fromJS } from 'immutable';
 
-const changHomeData = (result) => ({
-	type: constants.CHANGE_HOME_DATA,
-	topicList: result.topicList,
-	articleList: result.articleList,
-	recommendList: result.recommendList
+
+export const changeLogin = (code) => ({
+	type: constants.CHANGE_USER_LOGIN,
+	code
 });
 
-const addHomeList = (list, nextPage) => ({
-	type: constants.ADD_ARTICLE_LIST,
-	list: fromJS(list),
-	nextPage
+export const changeLogout = (code) => ({
+	type: constants.CHANGE_USER_LOGOUT,
+	code
 })
 
-export const getHomeInfo = () => {
+export const login = (username, password) => {
 	return (dispatch) => {
-		axios.get('/api/home.json').then((res) => {
-			const result = res.data.data;
-			dispatch(changHomeData(result));
-		});
+		const formData = new FormData();
+		formData.append('username', username);
+		formData.append('password', password);
+		axios.post('/interfaces/user/login', formData).then((res) => {
+			//const status = res.status;
+			const code = res.error_code;
+			if (code) {
+				alert("登录失败");
+			} else {
+				dispatch(changeLogin(code))
+			}
+		})
 	}
-}
+};
 
-export const getMoreList = (page) => {
+export const logout = () => {
 	return (dispatch) => {
-		axios.get('/api/homeList.json?page=' + page).then((res) => {
-			const result = res.data.data;
-			dispatch(addHomeList(result, page + 1));
-		});
+		axios.post("/interfaces/user/logout").then((res) => {
+			//const status = res.status;
+			const code = res.error_code;
+			if (code) {
+				alert("登录失败");
+			} else {
+				dispatch(changeLogout())
+			}
+		})
 	}
-}
-
-export const toggleTopShow = (show) => ({
-	type: constants.TOGGLE_SCROLL_TOP,
-	show
-})
+};
