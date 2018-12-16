@@ -6,13 +6,14 @@ import React, {Component} from "react";
 import {Form, Input, Checkbox, Button} from "antd";
 import {connect} from "react-redux";
 import {actionCreators} from "./store";
+import PropTypes from "proptypes";
 
 const FormItem = Form.Item;
 let formData = {
 	username: '',
 	password: ''
 };
-
+let history;
 class RegistrationFormWrapper extends Component {
 	state = {
 		confirmDirty: false,
@@ -20,7 +21,10 @@ class RegistrationFormWrapper extends Component {
 		username: '',
 		password: ''
 	};
-
+	componentDidMount() {
+		history = this.context.router.history;
+		console.log(history);
+	}
 
 	handleConfirmBlur = e => {
 		const value = e.target.value;
@@ -152,9 +156,9 @@ class RegistrationFormWrapper extends Component {
 						</Checkbox>
 					)}
 				</FormItem>
-				<p>{
-					this.props.error_code === 1001 ? '用户名只能由字母、数字、下划线组成，开头必须是字母，不能超过16位' :
-						this.props.error_code === 1002 ? '用户名已存在' : ''
+				<p align="center" style={{color: "red"}}>{
+					this.props.error_code === 1001 ? '用户名已存在' :
+						this.props.error_code === 1002 ? '用户名只能由字母、数字、下划线组成，开头必须是字母，不能超过16位' : ''
 				}</p>
 
 				<FormItem
@@ -162,7 +166,9 @@ class RegistrationFormWrapper extends Component {
 					{...tailFormItemLayout}
 				>
 					<Button type="primary" htmlType="submit"
-									onClick={() => {this.props.handleSubmit(formData.username, formData.password)}
+									onClick={() => {
+										this.props.handleSubmit(formData.username, formData.password,history);
+									}
 									}>
 						Register
 					</Button>
@@ -179,15 +185,17 @@ const mapState = (state) => {
 };
 const mapDispatch = (dispatch) => {
 	return {
-		handleSubmit(username, password) {
+		handleSubmit(username, password,history) {
 			// e.preventDefault();
 			// console.log(e.target);
-			dispatch(actionCreators.userSignupRequest(username, password));
+			dispatch(actionCreators.userSignupRequest(username, password,history));
 		},
 
 	};
 };
-
+RegistrationFormWrapper.contextTypes = {
+	router: PropTypes.object.isRequired
+};
 const RegistrationForm = Form.create()(RegistrationFormWrapper);
 export default connect(
 	mapState,

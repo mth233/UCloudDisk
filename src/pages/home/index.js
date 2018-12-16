@@ -4,8 +4,9 @@ import "./form";
 import Loginform from './form';
 import {Carousel} from 'antd';
 
-
 class Home extends Component {
+
+
 	render() {
 
 		return (
@@ -24,7 +25,7 @@ class Home extends Component {
 						<br/>
 						Windows
 					</div>
-					<div id="mac">
+					<div id="mac" >
 						<i className="iconfont icon-mac"/>
 						<br/>
 						<br/>
@@ -34,7 +35,7 @@ class Home extends Component {
 						<i className="iconfont icon-android"/>
 						<br/>
 						<br/>
-						IOS
+						<a href="../../upload.html">IOS</a>
 					</div>
 					<div id="android">
 						<i className="iconfont icon-iOS"/>

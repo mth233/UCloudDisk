@@ -10,10 +10,11 @@ const getFile = (content) =>({
 	content
 })
 
-export const getDetail = (id) => {
+export const getDetail = () => {
 	return (dispatch) => {
 		axios.get('/interfaces/file/get_file_list').then((res) => {
 			const status = res.status;
+			console.log(res);
 			if (!status){
 				const content = res.result;
 				dispatch(getFile(content));

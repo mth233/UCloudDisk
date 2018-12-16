@@ -14,15 +14,18 @@ export const logout = () => ({
 	value: false
 });
 
-export const login = (accout, password) => {
+export const login = (accout, password,history) => {
 	var formData = new FormData();
 	formData.append('username', accout);
 	formData.append('password', password);
 	return (dispatch) => {
 		axios.post('/interfaces/user/login', formData).then((res) => {
 			const status = res.status;
-			if (!status) {
-				dispatch(changeLogin())
+			console.log(status);
+			if (status===200) {
+				dispatch(changeLogin());
+				history.push('/detail');
+				console.log(history);
 			} else {
 				dispatch(loginError());
 			}

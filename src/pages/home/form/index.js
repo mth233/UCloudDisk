@@ -5,29 +5,35 @@ import * as actionCreators from './store/actionCreators';
 import React from 'react';
 import {connect} from 'react-redux';
 import './style.css';
-
+import PropTypes from "proptypes";
+import cookie from 'react-cookies'
 const FormItem = Form.Item;
 let formData = {
 	username: '',
 	password: ''
 };
+let history;
 
 class NormalLoginForm extends React.Component {
 	state = {
-		judgeLogin:false,
+		judgeLogin: false,
 		username: '',
 		password: ''
 	};
 	onChange = (e) => {
 		this.setState({[e.target.name]: e.target.value});
 	};
+	componentDidMount() {
+		history = this.context.router.history
+
+	}
 
 	render() {
 		const {getFieldDecorator} = this.props.form;
 		formData.username = this.state.username;
 		formData.password = this.state.password;
 		return (
-			<Form onSubmit={() => this.props.handleSubmit(formData.username, formData.password)} className="login-form">
+			<Form className="login-form">
 				U云盘登陆
 				<br/><br/>
 				<FormItem>
@@ -55,7 +61,8 @@ class NormalLoginForm extends React.Component {
 					)}
 					<a className="login-form-forgot" href="" style={{float: 'right'}}>Forgot password</a>
 					<br/>
-					<Button type="primary" htmlType="submit" className="login-form-button" style={{width: '100%'}}>
+					<Button type="primary" htmlType="submit" className="login-form-button" style={{width: '100%'}}
+									onClick={() => this.props.handleSubmit(formData.username, formData.password,history)}>
 						Log in
 					</Button>
 					Or <a href="/register">register now!</a>
@@ -66,17 +73,22 @@ class NormalLoginForm extends React.Component {
 }
 
 const mapState = (state) => ({
-	error_pwd : state.getIn(['login','pwd']),
+	error_pwd: state.getIn(['login', 'pwd']),
 	loginStatus: state.getIn(['login', 'login'])
 });
 
 const mapDispatch = (dispatch) => ({
-	handleSubmit(accountElem, passwordElem) {
-		dispatch(actionCreators.login(accountElem.value, passwordElem.value));
+	handleSubmit(accountElem, passwordElem,history) {
+		//console.log(accountElem);
+		dispatch(actionCreators.login(accountElem, passwordElem,history));
+		cookie.save(accountElem,passwordElem);
 	},
 	logout() {
 		dispatch(actionCreators.logout());
 	}
 });
+NormalLoginForm.contextTypes = {
+	router: PropTypes.object.isRequired
+};
 const LoginForm = Form.create()(NormalLoginForm);
 export default connect(mapState, mapDispatch)(LoginForm);
