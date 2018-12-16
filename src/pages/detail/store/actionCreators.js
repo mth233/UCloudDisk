@@ -14,9 +14,10 @@ export const getDetail = () => {
 	return (dispatch) => {
 		axios.get('/interfaces/file/get_file_list').then((res) => {
 			const status = res.status;
-			console.log(res);
-			if (!status){
-				const content = res.result;
+			console.log(res.data.result);
+			console.log(status);
+			if (status===200){
+				const content = res.data.result;
 				dispatch(getFile(content));
 			}
 

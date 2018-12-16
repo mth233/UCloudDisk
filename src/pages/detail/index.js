@@ -10,8 +10,10 @@ import {Layout, Menu, Breadcrumb, Icon, List, Avatar, Button, Skeleton} from "an
 import "./style.css";
 import UploadForm from "./upload";
 
+
 class Detail extends Component {
 	render() {
+
 		const {Content} = Layout;
 		const loadMore = !this.props.initLoading && !this.props.loading ? (
 			<div style={{
@@ -20,30 +22,40 @@ class Detail extends Component {
 			>
 				<Button onClick={this.onLoadMore}>loading more</Button>
 			</div>
-		) : null
+		) : null;
 		return (
 			<Content style={{padding: '0 50px'}}>
 				<Layout style={{padding: '24px 0', background: '#fff'}}>
-					<UploadForm/>
+					<div style={{margin:"100px"}}><UploadForm/></div>
 					<Content style={{padding: '0 24px', minHeight: 280}}>
 						<List
 							className="demo-loadmore-list"
-							loading={this.props.initLoading}
+							loading={this.props.content == null}
 							itemLayout="horizontal"
 							loadMore={loadMore}
+							className="demo-loadmore-list"
 							dataSource={this.props.content}
 							renderItem={item => (
-								<List.Item actions={[<a>edit</a>, <a>more</a>]}>
-									<Skeleton avatar title={false} loading={item.loading} active>
-										<List.Item.Meta
-											avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>}
-											title={<a href="https://ant.design">{item.name.last}</a>}
-											description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-										/>
-										<div>content</div>
-									</Skeleton>
+								<List.Item>
+
+									{
+
+										item.get("file_hash") === "DIR" ? null : (
+											<Skeleton avatar title={false} loading={item.loading} active>
+												<List.Item.Meta
+
+													//avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>}
+													title={<a href={require("../../statics/bg1.jpg")}>{item.get('file_name')}</a>
+													}
+													// title={<a href={require("/interfaces/my_files/" + (item.get('file_path') + "/" +
+													// 	item.get("file_name")).substr(1))}>{item.get('file_name')}</a>}
+
+													description={"file size:  " + item.get('file_size') + "b"}/>
+											</Skeleton>)
+									}
 								</List.Item>
 							)}
+
 						/>
 					</Content>
 				</Layout>
@@ -65,6 +77,7 @@ const mapState = (state) => ({
 const mapDispatch = (dispatch) => ({
 	getDetail() {
 		dispatch(actionCreators.getDetail());
+
 	}
 });
 

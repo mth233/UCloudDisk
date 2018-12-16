@@ -6,7 +6,7 @@ const defaultState = fromJS({
 	initLoading: true,
 	loading: false,
 });
-const getFiles = (state, action) => {
+const listFile = (state, action) => {
 	return state.merge({
 		content: action.content
 	})
@@ -14,12 +14,13 @@ const getFiles = (state, action) => {
 export default (state = defaultState, action) => {
 	switch (action.type) {
 		case constants.CHANGE_DETAIL:
+
 			return state.merge({
 				title: action.title,
 				content: action.content
 			});
 		case constants.GET_FILES:
-			return getFiles(state, action);
+			return listFile(state, action);
 		default:
 			return state;
 	}

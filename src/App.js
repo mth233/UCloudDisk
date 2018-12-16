@@ -26,7 +26,7 @@ class App extends Component {
 						<Route path='/' exact component={Home}/>
 						<Route path='/register' exact component={RegistrationForm}/>
 						<Route path='/detail' exact component={Detail}/>
-
+						<Route path='/interfaces/my_files' />
 					</div>
 				</BrowserRouter>
 			</Provider>
