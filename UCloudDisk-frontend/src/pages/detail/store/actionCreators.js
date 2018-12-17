@@ -23,7 +23,7 @@ export const getDetail = () => {
 					}
 				}
 				//const content = res.data.result;
-				console.log(content);
+				//console.log(content);
 				dispatch(getFile(content));
 			}
 

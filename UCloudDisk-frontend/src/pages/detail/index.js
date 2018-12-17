@@ -43,13 +43,13 @@ class Detail extends Component {
 												<List.Item.Meta
 
 													//avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>}
-													title={<a
-														href={require("../../statics/a.pdf")} target="_Blank">{item.get('file_path') +
-													"/" + item.get('file_name')}</a>
-													}
-													// title={<a href={require("/interfaces/my_files/" + (item.get('file_path') + "/" +
-													// 	item.get("file_name")).substr(1))} target="_Blank">{item.get('file_path') +
-													// "/" + item.get('file_name')}</a>}
+													// title={<a
+													// 	href={require("../../statics/a.pdf")} target="_Blank">{item.get('file_path') +
+													// "/" + item.get('file_name')}</a>
+													// }
+													title={<a href={require("/interfaces/my_files/" + (item.get('file_path') + "/" +
+														item.get("file_name")).substr(1))} target="_Blank">{item.get('file_path') +
+													"/" + item.get('file_name')}</a>}
 
 													description={"file size:  " + item.get('file_size') + "b"}/>
 											</Skeleton>)

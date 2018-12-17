@@ -28,7 +28,7 @@ export const login = (accout, password, history) => {
 				if (!res.data.status) {
 					dispatch(changeLogin());
 					history.push('/detail');
-					console.log(history);
+					//console.log(history);
 				} else if (res.data.error_code === 1003) {
 					dispatch(loginError());
 				} else {
