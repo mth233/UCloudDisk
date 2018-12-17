@@ -1,20 +1,20 @@
 import React, {Component} from 'react';
-
 import {Menu, Icon} from 'antd';
 import {Logo} from "./style";
 
 class MyHeader extends Component {
 
-	state = {
-		current: 'mail',
-	};
+	// state = {
+	// 	current: 'mail',
+	// };
 
-	handleClick = (e) => {
-		console.log('click ', e);
-		this.setState({
-			current: e.key,
-		});
-	};
+	// handleClick = (e) => {
+	// 	console.log(e);
+	// 	this.setState({
+	// 		current: e.key,
+	// 	});
+	// 	console.log(this.state);
+	// };
 
 	render() {
 		// const SubMenu = Menu.SubMenu;
@@ -22,12 +22,13 @@ class MyHeader extends Component {
 
 		return (
 			<Menu
-				onClick={this.handleClick}
-				selectedKeys={[this.state.current]}
+				// onClick={this.handleClick}
+				// selectedKeys={[this.state.current]}
 				mode="horizontal"
+				// defaultSelectedKeys={['home']}
 			>
-				<Logo>Logo</Logo>
-				<Menu.Item key="mail">
+				<Logo>U云盘</Logo>
+				<Menu.Item key="mail" >
 					<a href="/">
 						<Icon type="home"/>Home
 					</a>
@@ -46,8 +47,10 @@ class MyHeader extends Component {
 				{/*<Menu.Item key="setting:4">Option 4</Menu.Item>*/}
 				{/*</MenuItemGroup>*/}
 				{/*</SubMenu>*/}
-				<Menu.Item key="contact">
-					<Icon type="phone"/>Contact
+				<Menu.Item key="contact" >
+					<a href="/contact">
+						<Icon type="phone"/>Contact
+					</a>
 				</Menu.Item>
 			</Menu>
 		);

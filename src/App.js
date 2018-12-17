@@ -14,6 +14,7 @@ import MyHeader from './common/header';
 import Home from './pages/home';
 import RegistrationForm from './pages/register';
 import Detail from './pages/detail/loadable.js';
+import Contact from './pages/contact/index';
 import store from './store';
 
 class App extends Component {
@@ -26,7 +27,8 @@ class App extends Component {
 						<Route path='/' exact component={Home}/>
 						<Route path='/register' exact component={RegistrationForm}/>
 						<Route path='/detail' exact component={Detail}/>
-						<Route path='/interfaces/my_files' />
+						<Route path='/interfaces/my_files'/>
+						<Route path='/contact' exact component={Contact}/>
 					</div>
 				</BrowserRouter>
 			</Provider>

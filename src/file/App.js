@@ -134,7 +134,6 @@ export default class DataOprate extends React.Component {
                         </div>
                     )
                 })}
-
             </div>
 
         </div>

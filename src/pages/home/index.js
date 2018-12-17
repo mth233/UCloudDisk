@@ -35,7 +35,7 @@ class Home extends Component {
 						<i className="iconfont icon-android"/>
 						<br/>
 						<br/>
-						<a href="../../../public/upload.html">IOS</a>
+						IOS
 					</div>
 					<div id="android">
 						<i className="iconfont icon-iOS"/>

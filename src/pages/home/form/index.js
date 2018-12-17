@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import './style.css';
 import PropTypes from "proptypes";
 import cookie from 'react-cookies'
+
 const FormItem = Form.Item;
 let formData = {
 	username: '',
@@ -23,6 +24,7 @@ class NormalLoginForm extends React.Component {
 	onChange = (e) => {
 		this.setState({[e.target.name]: e.target.value});
 	};
+
 	componentDidMount() {
 		history = this.context.router.history
 
@@ -62,10 +64,17 @@ class NormalLoginForm extends React.Component {
 					<a className="login-form-forgot" href="" style={{float: 'right'}}>Forgot password</a>
 					<br/>
 					<Button type="primary" htmlType="submit" className="login-form-button" style={{width: '100%'}}
-									onClick={() => this.props.handleSubmit(formData.username, formData.password,history)}>
+									onClick={() => this.props.handleSubmit(formData.username, formData.password, history)}>
 						Log in
 					</Button>
 					Or <a href="/register">register now!</a>
+
+					<div align="left" style={{color: "red",fontSize:"12px"}}>{
+						this.props.error_type === 1 ? '该用户不存在' :
+							this.props.error_type === 2 ? '密码错误' : ''
+					}</div>
+
+
 				</FormItem>
 			</Form>
 		);
@@ -73,15 +82,15 @@ class NormalLoginForm extends React.Component {
 }
 
 const mapState = (state) => ({
-	error_pwd: state.getIn(['login', 'pwd']),
+	error_type: state.getIn(['login', 'error_type']),
 	loginStatus: state.getIn(['login', 'login'])
 });
 
 const mapDispatch = (dispatch) => ({
-	handleSubmit(accountElem, passwordElem,history) {
+	handleSubmit(accountElem, passwordElem, history) {
 		//console.log(accountElem);
-		dispatch(actionCreators.login(accountElem, passwordElem,history));
-		cookie.save(accountElem,passwordElem);
+		dispatch(actionCreators.login(accountElem, passwordElem, history));
+		cookie.save(accountElem, passwordElem);
 	},
 	logout() {
 		dispatch(actionCreators.logout());

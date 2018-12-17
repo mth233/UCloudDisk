@@ -3,7 +3,7 @@
  * @Date: 2018-12-09 22:27:00
  */
 import React, {Component} from "react";
-import {Form, Input, Checkbox, Button} from "antd";
+import {Form, Input, Checkbox, Button, Modal} from "antd";
 import {connect} from "react-redux";
 import {actionCreators} from "./store";
 import PropTypes from "proptypes";
@@ -14,16 +14,33 @@ let formData = {
 	password: ''
 };
 let history;
+
 class RegistrationFormWrapper extends Component {
 	state = {
 		confirmDirty: false,
 		autoCompleteResult: [],
 		username: '',
-		password: ''
+		password: '',
+		visible: false,
 	};
+
+	showModal = () => {
+		this.setState({
+			visible: true,
+		});
+	};
+
+	handleOk = () => {
+
+		this.setState({
+			visible: false,
+		});
+	};
+
+
 	componentDidMount() {
 		history = this.context.router.history;
-		console.log(history);
+		//console.log(history);
 	}
 
 	handleConfirmBlur = e => {
@@ -152,13 +169,29 @@ class RegistrationFormWrapper extends Component {
 						valuePropName: "checked"
 					})(
 						<Checkbox>
-							I have read the <a href="">agreement</a>
+							I have read the <a onClick={this.showModal}>agreement</a>
 						</Checkbox>
 					)}
 				</FormItem>
-				<p align="center" style={{color: "red"}}>{
-					this.props.error_code === 1001 ? '用户名已存在' :
-						this.props.error_code === 1002 ? '用户名只能由字母、数字、下划线组成，开头必须是字母，不能超过16位' : ''
+				<Modal
+					title="用户注册须知"
+					visible={this.state.visible}
+					footer={null}
+					onCancel={this.handleOk}
+				>
+					U云盘平台是由武汉大学计算机学院计算机科学与技术系学生的一个项目。为了充分保障您的合法权益、向您提供更好的服务，请先阅读以下内容，同意后方可注册。
+					<p>保护用户隐私是本平台的一项基本政策，本平台保证不对外公开或向第三方提供用户注册资料及用户在使用本平台提供服务时存储在本平台的非公开内容，但下列情况除外：</p>
+					<p/>a）事先获得用户的明确授权；
+					<br/>b）根据有关的法律法规要求；
+					<br/>c）按照相关政府主管部门的要求；
+					<br/>d）为维护社会公众的利益；
+					<br/>e）为维护本平台的合法权益；
+					<p>如因系统维护或升级的需要而需暂停本平台的服务，本平台将尽可能事先进行通告，但本平台同时保留在不事先通知用户的情况下随时中断或终止部分或全部服务的权利。</p>
+					<p>最后，该产品的最终解释权归U云盘公司所有</p>
+				</Modal>
+				<p align="center" style={{color: "red", fontSize: "12px"}}>{
+					this.props.error_code === 1001 ? '用户名只能由字母、数字、下划线组成，开头必须是字母，不能超过16位' :
+						this.props.error_code === 1002 ? '用户名已存在' : ''
 				}</p>
 
 				<FormItem
@@ -167,13 +200,14 @@ class RegistrationFormWrapper extends Component {
 				>
 					<Button type="primary" htmlType="submit"
 									onClick={() => {
-										this.props.handleSubmit(formData.username, formData.password,history);
+										this.props.handleSubmit(formData.username, formData.password, history);
 									}
 									}>
 						Register
 					</Button>
 				</FormItem>
 			</Form>
+
 		);
 	}
 }
@@ -185,10 +219,10 @@ const mapState = (state) => {
 };
 const mapDispatch = (dispatch) => {
 	return {
-		handleSubmit(username, password,history) {
+		handleSubmit(username, password, history) {
 			// e.preventDefault();
 			// console.log(e.target);
-			dispatch(actionCreators.userSignupRequest(username, password,history));
+			dispatch(actionCreators.userSignupRequest(username, password, history));
 		},
 
 	};

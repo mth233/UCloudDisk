@@ -8,27 +8,37 @@ const changeLogin = () => ({
 const loginError = () => ({
 	type: constants.ERROR_PASSWORD,
 });
-
+const userNotExist = () => ({
+	type: constants.USER_NOT_EXIST
+})
 export const logout = () => ({
 	type: constants.LOG_OUT,
 	value: false
 });
 
-export const login = (accout, password,history) => {
+export const login = (accout, password, history) => {
 	var formData = new FormData();
 	formData.append('username', accout);
 	formData.append('password', password);
 	return (dispatch) => {
 		axios.post('/interfaces/user/login', formData).then((res) => {
 			const status = res.status;
-			console.log(status);
-			if (status===200) {
-				dispatch(changeLogin());
-				history.push('/detail');
-				console.log(history);
+			//console.log(res);
+			if (status) {
+				if (!res.data.status) {
+					dispatch(changeLogin());
+					history.push('/detail');
+					console.log(history);
+				} else if (res.data.error_code === 1003) {
+					dispatch(loginError());
+				} else {
+					dispatch(userNotExist());
+				}
 			} else {
-				dispatch(loginError());
+				alert("网络状况不太好，请稍后重试");
 			}
+		}).catch(() => {
+			alert("网络状况不太好，请稍后重试");
 		})
 	}
 };

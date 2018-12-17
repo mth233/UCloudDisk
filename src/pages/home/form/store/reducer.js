@@ -3,7 +3,7 @@ import * as constants from './constants';
 
 const defaultState = fromJS({
 	login: false,
-	pwd: true,
+	error_type: 0,
 });
 
 export default (state = defaultState, action) => {
@@ -13,7 +13,9 @@ export default (state = defaultState, action) => {
 		case constants.LOG_OUT:
 			return state.set('login', action.value);
 		case constants.ERROR_PASSWORD:
-			return state.set('pwd', false);
+			return state.set('error_type', 1);
+		case constants.USER_NOT_EXIST:
+			return state.set('error_type', 2);
 		default:
 			return state;
 	}

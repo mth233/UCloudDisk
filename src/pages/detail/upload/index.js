@@ -16,7 +16,9 @@ class UploadForm extends React.Component {
 	render() {
 		return (
 			<iframe
-				style={{width:'100%', height:this.state.iFrameHeight, overflow:'visible'}}
+				title="upload"
+				//style={{width:'100%', height:this.state.iFrameHeight, overflow:'visible'}}
+				style={{width:'100%', paddingTop:"10px", overflow:'visible'}}
 				onLoad={() => {
 					const obj = ReactDOM.findDOMNode(this);
 					this.setState({
