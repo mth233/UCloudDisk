@@ -12,6 +12,11 @@ import UploadForm from "./upload";
 
 
 class Detail extends Component {
+	getFile = (e) => {
+		console.log(e);
+	}
+
+
 	render() {
 
 		const {Content} = Layout;
@@ -41,14 +46,18 @@ class Detail extends Component {
 										item.get("file_hash") === "DIR" ? null : (
 											<Skeleton avatar title={false} loading={item.loading} active>
 												<List.Item.Meta
-
 													//avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>}
 													// title={<a
 													// 	href={require("../../statics/a.pdf")} target="_Blank">{item.get('file_path') +
 													// "/" + item.get('file_name')}</a>
 													// }
-													title={<a href={require("/interfaces/my_files/" + (item.get('file_path') + "/" +
-														item.get("file_name")).substr(1))} target="_Blank">{item.get('file_path') +
+													title={<a
+														href={encodeURIComponent("/interfaces/my_files/" + (item.get('file_path') + "/" +
+															item.get("file_name")).substr(1)).replace(/%2F/g,"/")}
+														//href="www.baidu.com"
+														target="_Blank"
+														rel="noopener noreferrer"
+													>{item.get('file_path') +
 													"/" + item.get('file_name')}</a>}
 
 													description={"file size:  " + item.get('file_size') + "b"}/>

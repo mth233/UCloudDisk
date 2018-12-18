@@ -29,13 +29,13 @@ class Contact extends Component {
 					<div className="span">黄思达 学号:2016302330057 {"\u2728"}</div>
 				</Parallax>
 				<Parallax data={data}>
-					<div className="span">孟天航 学号:×××××× {"\u2728"}</div>
+					<div className="span">孟天航 2016301750053 {"\u2728"}</div>
 				</Parallax>
 				<Parallax data={data}>
 					<div className="span">滕正丽 学号:2016301500350 {"\u2728"}</div>
 				</Parallax>
 				<Parallax data={data}>
-				<div className="span">刘天义 学号:×××××× {"\u2728"}</div>
+				<div className="span">刘天义 学号:2016301510044 {"\u2728"}</div>
 				</Parallax>
 				<Parallax data={data}>
 					<div className="span">钟宇村 学号:2016302180129 {"\u2728"}</div>
