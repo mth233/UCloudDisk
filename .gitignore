@@ -7,5 +7,4 @@
 .vscode
 *.iml
 node_modules/
-package.json
 *.sql

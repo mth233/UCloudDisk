@@ -7,7 +7,7 @@ import {
 	Provider
 } from 'react-redux';
 import {
-	HashRouter,
+	BrowserRouter,
 	Route
 } from 'react-router-dom';
 import MyHeader from './common/header';
@@ -21,7 +21,7 @@ class App extends Component {
 	render() {
 		return (
 			<Provider store={store}>
-				<HashRouter>
+				<BrowserRouter>
 					<div>
 						<MyHeader/>
 						<Route path='/' exact component={Home}/>
@@ -29,7 +29,7 @@ class App extends Component {
 						<Route path='/detail' exact component={Detail}/>
 						<Route path='/contact' exact component={Contact}/>
 					</div>
-				</HashRouter>
+				</BrowserRouter>
 			</Provider>
 		);
 	}
