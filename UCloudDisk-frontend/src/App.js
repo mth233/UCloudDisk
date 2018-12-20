@@ -8,7 +8,7 @@ import {
 } from 'react-redux';
 import {
 	BrowserRouter,
-	Route
+	Route, withRouter
 } from 'react-router-dom';
 import MyHeader from './common/header';
 import Home from './pages/home';
@@ -16,6 +16,7 @@ import RegistrationForm from './pages/register';
 import Detail from './pages/detail/loadable.js';
 import Contact from './pages/contact/index';
 import store from './store';
+import connect from "react-redux/es/connect/connect";
 
 class App extends Component {
 	render() {
@@ -34,5 +35,4 @@ class App extends Component {
 		);
 	}
 }
-
 export default App;

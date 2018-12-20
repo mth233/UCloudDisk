@@ -23,7 +23,8 @@
  * 默认的回调函数会在控制台打印服务器响应的数据
  * 
  *
- * version: 1.2
+ * version: 1.3
+ * written by star
  * 
  */
 function FileUploader() {
@@ -36,6 +37,10 @@ function FileUploader() {
     };
     this.onChunkUploadComplete = function (current_chunk, chunk_count, chunk_size) {
         console.log(current_chunk, chunk_count, chunk_size);
+    };
+
+    this.onDirUploadFileStart = function(file_path, file_name) {
+
     };
 
     this.onFileUploadProgress = function (percent) {
@@ -91,12 +96,23 @@ function FileUploader() {
             // 对文件路径截取得到所有目录路径
             var dir_path = file.webkitRelativePath.substring(0, file.webkitRelativePath.lastIndexOf('/'));
             if (dir_paths.indexOf(dir_path) === -1) dir_paths.push(dir_path);
+			while (dir_path.lastIndexOf('/') !== -1)  {
+				dir_path = dir_path.substring(0, dir_path.lastIndexOf('/'));
+				if (dir_paths.indexOf(dir_path) === -1) dir_paths.push(dir_path);
+			}
         }
         // 对目录路径排序，加上父目录路径
         dir_paths = dir_paths.sort();
         for (i = 0; i < dir_paths.length; i++) {
-            dir_paths[i] = parent_dir_path + '/' + dir_paths[i];
+           dir_paths[i] = parent_dir_path + '/' + dir_paths[i];
         }
+        var parent_dirs = [];
+        var parent_dir = parent_dir_path;
+        while (parent_dir.lastIndexOf('/') !== -1)  {
+            parent_dir = parent_dir.substring(0, parent_dir.lastIndexOf('/'));
+            if (parent_dir !== "" && parent_dirs.indexOf(parent_dir) === -1) parent_dirs.push(parent_dir);
+        }
+        dir_paths = parent_dirs.concat(dir_paths);
         console.log(dir_paths);
 
         var fileUploaderInstance = this;
@@ -115,8 +131,9 @@ function FileUploader() {
                     var file = files[currentIndex];
                     var dir_path = parent_dir_path + '/' + file.webkitRelativePath.substring(0, file.webkitRelativePath.lastIndexOf('/'));
                     var file_name = file.webkitRelativePath.substring(file.webkitRelativePath.lastIndexOf('/') + 1);
+                    fileUploaderInstance.onDirUploadFileStart(dir_path, file_name);
                     console.log(dir_path, file_name);
-                    $.when(fileUploaderInstance.uploadFile(file, file_name, dir_path)).done(function (response) {
+                    jQuery.when(fileUploaderInstance.uploadFile(file, file_name, dir_path)).done(function (response) {
                         currentIndex++;
                         up();
                     });

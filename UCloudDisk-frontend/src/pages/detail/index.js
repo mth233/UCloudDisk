@@ -9,7 +9,7 @@ import {actionCreators} from "./store";
 import {Layout, List, Button, Skeleton} from "antd";
 import "./style.css";
 import UploadForm from "./upload";
-
+import TreeList from './tree';
 
 class Detail extends Component {
 	getFile = (e) => {
@@ -33,12 +33,13 @@ class Detail extends Component {
 				<Layout style={{padding: '24px 0', background: '#fff'}}>
 					<div style={{margin: "10px"}}><UploadForm/></div>
 					<Content style={{padding: '0 24px', minHeight: 280}}>
+						<TreeList className="TreeListWrapper" />
 						<List
-							className="demo-loadmore-list"
+							className="demo-loadmore-list ListWrapper"
 							loading={this.props.content == null}
 							itemLayout="horizontal"
 							loadMore={loadMore}
-							dataSource={this.props.content}
+							dataSource={this.props.all}
 							renderItem={item => (
 								<List.Item>
 									{
@@ -51,9 +52,9 @@ class Detail extends Component {
 													// 	href={require("../../statics/a.pdf")} target="_Blank">{item.get('file_path') +
 													// "/" + item.get('file_name')}</a>
 													// }
-													title={<a
-														href={encodeURIComponent("/interfaces/my_files/" + (item.get('file_path') + "/" +
-															item.get("file_name")).substr(1)).replace(/%2F/g,"/")}
+													title={
+														<a href={encodeURIComponent("/interfaces/my_files/" + (item.get('file_path') + "/" +
+															item.get("file_name")).substr(1)).replace(/%2F/g, "/")}
 														//href="www.baidu.com"
 														target="_Blank"
 														rel="noopener noreferrer"
@@ -81,7 +82,8 @@ class Detail extends Component {
 const mapState = (state) => ({
 	initLoading: state.getIn(['detail', 'initLoading']),
 	loading: state.getIn(['detail', 'loading']),
-	content: state.getIn(['detail', 'content'])
+	content: state.getIn(['detail', 'content']),
+	all:state.getIn(['detail','all']),
 });
 
 const mapDispatch = (dispatch) => ({

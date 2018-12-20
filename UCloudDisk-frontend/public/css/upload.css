@@ -34,6 +34,7 @@ body {
     -webkit-transform: translateY(20px);
     transform: translateY(20px);
     opacity: 0;
+    top: 180px;
 }
 
 .upload .upload-files header {
@@ -259,8 +260,8 @@ body {
     height: 8px;
     border: solid 1px lightgray;
     border-radius: 3px;
-    background: -webkit-linear-gradient(right, rgba(77, 182, 172, 0.2), rgba(77, 182, 172, 0.8)) no-repeat;
-    background: linear-gradient(to left, rgba(77, 182, 172, 0.2), rgba(77, 182, 172, 0.8)) no-repeat;
+    /*background: -webkit-linear-gradient(right, #48a8ff, #ffffff) no-repeat;*/
+    background: linear-gradient(to left, #48a8ff, #ffffff) no-repeat;
     background-size: 20% 100%;
 }
 
@@ -284,9 +285,11 @@ body {
     font-size: 24px;
     opacity: 0;
 }
-.unique-upload{
+
+.unique-upload {
     margin-top: 200px;
 }
+
 .upload .upload-files footer .list-files .file .done:hover:before {
     -webkit-transition: all .25s ease;
     transition: all .25s ease;
