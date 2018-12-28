@@ -38,7 +38,7 @@ class Contact extends Component {
 				<div className="span">刘天义 学号:2016301510044 {"\u2728"}</div>
 				</Parallax>
 				<Parallax data={data}>
-					<div className="span">钟宇村 学号:2016302180129 {"\u2728"}</div>
+					<div className="span">钟雨村 学号:2016302180129 {"\u2728"}</div>
 				</Parallax>
 				<div className="githubWrapper">
 					<a href="https://github.com/WHUbigsoft/CloudDisk_FrontEnd" target="_blank"

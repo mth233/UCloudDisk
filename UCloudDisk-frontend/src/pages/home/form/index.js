@@ -29,7 +29,6 @@ class NormalLoginForm extends React.Component {
 		history = this.context.router.history
 
 	}
-
 	render() {
 		const {getFieldDecorator} = this.props.form;
 		formData.username = this.state.username;

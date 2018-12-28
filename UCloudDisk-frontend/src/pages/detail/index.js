@@ -5,21 +5,31 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
-import {actionCreators} from "./store";
-import {Layout, List, Button, Skeleton} from "antd";
+import {Layout, Input, Button, List, Skeleton} from "antd";
 import "./style.css";
 import UploadForm from "./upload";
-import TreeList from './tree';
+import * as actionCreators from "./store/actionCreators";
 
 class Detail extends Component {
-	getFile = (e) => {
-		console.log(e);
+	componentDidMount() {
+		this.props.getDetail();
 	}
 
+	// search(value) {
+	// 	console.log(searchContent);
+	// 	var newContent = [];
+	// 	// this.props.searchContent.map(data => {
+	// 	// 	// console.log(data.get("file_name"))
+	// 	// 	if (data.get("file_name").indexOf(value) !== -1) {
+	// 	// 		newContent.push(data);
+	// 	// 	}
+	// 	// });
+	// 	searchContent = newContent;
+	// 	console.log(newContent);
+	// }
 
 	render() {
-
-		const {Content} = Layout;
+		const Search = Input.Search;
 		const loadMore = !this.props.initLoading && !this.props.loading ? (
 			<div style={{
 				textAlign: 'center', marginTop: 12, height: 32, lineHeight: '32px',
@@ -28,18 +38,25 @@ class Detail extends Component {
 				<Button onClick={this.onLoadMore}>loading more</Button>
 			</div>
 		) : null;
+		const {Content} = Layout;
 		return (
 			<Content style={{padding: '0 50px'}}>
 				<Layout style={{padding: '24px 0', background: '#fff'}}>
 					<div style={{margin: "10px"}}><UploadForm/></div>
 					<Content style={{padding: '0 24px', minHeight: 280}}>
-						<TreeList className="TreeListWrapper" />
+						<Search
+							placeholder="input search text"
+							onSearch={(value, event) => {
+								this.props.search(value);
+							}}
+							enterButton
+						/>
 						<List
 							className="demo-loadmore-list ListWrapper"
 							loading={this.props.content == null}
 							itemLayout="horizontal"
 							loadMore={loadMore}
-							dataSource={this.props.all}
+							dataSource={this.props.searchContent}
 							renderItem={item => (
 								<List.Item>
 									{
@@ -55,11 +72,11 @@ class Detail extends Component {
 													title={
 														<a href={encodeURIComponent("/interfaces/my_files/" + (item.get('file_path') + "/" +
 															item.get("file_name")).substr(1)).replace(/%2F/g, "/")}
-														//href="www.baidu.com"
-														target="_Blank"
-														rel="noopener noreferrer"
-													>{item.get('file_path') +
-													"/" + item.get('file_name')}</a>}
+															//href="www.baidu.com"
+															 target="_Blank"
+															 rel="noopener noreferrer"
+														>{item.get('file_path') +
+														"/" + item.get('file_name')}</a>}
 
 													description={"file size:  " + item.get('file_size') + "b"}/>
 											</Skeleton>)
@@ -68,32 +85,30 @@ class Detail extends Component {
 							)}
 
 						/>
+
 					</Content>
 				</Layout>
 			</Content>
 		);
 	}
-
-	componentDidMount() {
-		this.props.getDetail();
-	}
 }
 
 const mapState = (state) => ({
 	initLoading: state.getIn(['detail', 'initLoading']),
-	loading: state.getIn(['detail', 'loading']),
 	content: state.getIn(['detail', 'content']),
-	all:state.getIn(['detail','all']),
+	all: state.getIn(['detail', 'all']),
+	searchContent:state.getIn(['detail', 'searchFile'])
 });
-
 const mapDispatch = (dispatch) => ({
 	getDetail() {
 		dispatch(actionCreators.getDetail());
-
+	},
+	search(value) {
+		dispatch(actionCreators.search(value));
 	}
-});
 
+
+});
 export default connect(
-	mapState,
-	mapDispatch
+	mapState, mapDispatch
 )(withRouter(Detail));
